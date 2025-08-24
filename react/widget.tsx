@@ -30,6 +30,7 @@ export function FeedbackWidget({ children }: FeedbackWidgetProps) {
     // todo validate
 
     setSending(true);
+    setOpen(false);
 
     await sendFeedback(feedback.trim());
 

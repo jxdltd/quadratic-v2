@@ -2,11 +2,17 @@
   "name": "quadratic-v2",
   "module": "index.ts",
   "type": "module",
-  "private": true,
+  "version": "0.1.1",
+  "files": [
+    "dist",
+    "react",
+    "server.ts"
+  ],
   "scripts": {
     "build:css": "tailwindcss -i ./react/style.css -o ./dist/style.css"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.6",
     "@tailwindcss/cli": "^4.1.12",
     "@types/bun": "latest",
     "@types/react": "^19.1.11",
@@ -30,7 +36,14 @@
   "exports": {
     "./server": {
       "types": "./server.ts",
-      "import": "./dist/server.js"
+      "default": "./dist/server.js"
+    },
+    "./react": {
+      "types": "./react/index.tsx",
+      "default": "./dist/index.js"
+    },
+    "./style.css": {
+      "default": "./dist/style.css"
     }
   }
 }
