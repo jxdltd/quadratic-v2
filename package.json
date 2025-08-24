@@ -13,5 +13,11 @@
     "@linear/sdk": "^57.0.0",
     "effect": "^3.17.9",
     "zod": "^4.1.1"
+  },
+  "exports": {
+    "./server": {
+      "types": "./server.ts",
+      "import": "./dist/server.js"
+    }
   }
 }
