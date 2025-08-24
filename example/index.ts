@@ -1,6 +1,6 @@
 import { LinearClient } from "@linear/sdk";
 import { serve } from "bun";
-import { Console, Data, Effect } from "effect";
+import { Data, Effect } from "effect";
 import z from "zod";
 
 const apiKey = process.env.API_KEY!; // todo: validate
@@ -14,12 +14,22 @@ class LinearError extends Data.TaggedError("LinearError")<{}> {}
 
 const teamIdSchema = z.uuid();
 
+const bodySchema = z.object({
+  title: z.string().min(10).max(1000),
+});
+
 const validateTeamId = (teamId: string) =>
   Effect.suspend(() =>
     teamIdSchema.safeParse(teamId).success
       ? Effect.succeed(teamId)
       : Effect.fail(new InvalidSchemaError({ problem: "Invalid team ID" }))
   );
+
+const validateBody = (body: unknown) =>
+  Effect.try({
+    try: () => bodySchema.parse(body),
+    catch: () => new InvalidSchemaError({ problem: "Invalid body" }),
+  });
 
 const createClient = () => Effect.sync(() => new LinearClient({ apiKey }));
 
@@ -29,19 +39,27 @@ const createIssue = (client: LinearClient, teamId: string, title: string) =>
     catch: () => new LinearError(),
   });
 
-const program = validateTeamId(teamId).pipe(
-  Effect.andThen(createClient),
-  Effect.andThen((client) => createIssue(client, teamId, "test")),
-  Effect.andThen(() => Effect.succeed(new Response("Ok!"))),
-  Effect.catchTag("InvalidSchemaError", (e) =>
-    Effect.succeed(new Response(e.problem, { status: 400 }))
-  ),
-  Effect.catchTag("LinearError", (e) =>
-    Effect.succeed(new Response("Internal server error", { status: 500 }))
-  )
-);
+async function createHandler(req: Request) {
+  return Effect.runPromise(
+    validateTeamId(teamId).pipe(
+      Effect.andThen(
+        Effect.zip(createClient(), validateBody(await req.json()))
+      ),
+      Effect.andThen(([client, body]) =>
+        createIssue(client, teamId, body.title)
+      ),
+      Effect.andThen(() => Effect.succeed(new Response("Ok!"))),
+      Effect.catchTag("InvalidSchemaError", (e) =>
+        Effect.succeed(new Response(e.problem, { status: 400 }))
+      ),
+      Effect.catchTag("LinearError", (e) =>
+        Effect.succeed(new Response("Internal server error", { status: 500 }))
+      )
+    )
+  );
+}
 
 serve({
   port: 3000,
-  fetch: (req) => Effect.runPromise(program),
+  fetch: (req) => createHandler(req),
 });
