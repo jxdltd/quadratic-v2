@@ -27,7 +27,7 @@ export const POST = createHandler({
 });
 ```
 
-### Add the feedback widget to your app
+### Add the feedback widget to your app
 
 ```tsx
 // app/page.tsx
