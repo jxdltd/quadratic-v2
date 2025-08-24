@@ -3,14 +3,27 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./react/style.css -o ./dist/style.css"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@tailwindcss/cli": "^4.1.12",
+    "@types/bun": "latest",
+    "@types/react": "^19.1.11",
+    "@types/react-dom": "^19.1.7",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.3.0",
+    "tailwindcss": "^4.1.7",
+    "tailwindcss-animate": "^1.0.7"
   },
   "peerDependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "typescript": "^5"
   },
   "dependencies": {
     "@linear/sdk": "^57.0.0",
+    "@radix-ui/react-dialog": "^1.1.15",
     "effect": "^3.17.9",
     "zod": "^4.1.1"
   },

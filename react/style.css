@@ -1,0 +1,4 @@
+@import "tailwindcss/theme.css" prefix(tw);
+@import "tailwindcss/utilities.css" prefix(tw);
+
+@plugin "tailwindcss-animate";
