@@ -1,0 +1,16 @@
+{
+  "name": "quadratic-v2",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@linear/sdk": "^57.0.0",
+    "effect": "^3.17.9"
+  }
+}
