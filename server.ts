@@ -1,18 +1,19 @@
 import { Effect } from "effect";
-import { LinearService, LiveLinearService } from "./context";
+import { LinearService, createLinearService } from "./context";
 
 const program = Effect.gen(function* () {
   const linear = yield* LinearService;
 
-  linear.createIssue("test");
-
-  return new Response("Hello, world!!!");
+  yield* linear.createIssue("test");
 });
 
-export function handle() {
+export function handle(apiKey: string) {
   return (request: Request) => {
-    return Effect.runSync(
-      Effect.provideService(program, LinearService, LiveLinearService)
+    const responseProgram = program.pipe(
+      Effect.andThen(() => Effect.succeed(new Response("Ok!"))),
+      Effect.provideService(LinearService, createLinearService(apiKey))
     );
+
+    return Effect.runSync(responseProgram);
   };
 }

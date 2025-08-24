@@ -3,5 +3,5 @@ import { handle } from "../server";
 
 serve({
   port: 3000,
-  fetch: handle(),
+  fetch: handle(process.env.API_KEY!),
 });
