@@ -2,9 +2,7 @@
 
 Easily capture user feedback in your app and track it in Linear. Created by [The Holistic Company](https://www.holistic.company).
 
-<video width="320" height="240" controls>
-  <source src="./demo.mp4" type="video/mp4">
-</video>
+![Demo](./demo.gif)
 
 ## Getting Started
 
