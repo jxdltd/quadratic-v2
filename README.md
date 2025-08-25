@@ -2,6 +2,8 @@
 
 Easily capture user feedback in your app and track it in Linear. Created by [The Holistic Company](https://www.holistic.company).
 
+![Demo](/demo.mp4)
+
 ## Getting Started
 
 ```bash

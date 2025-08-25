@@ -15,7 +15,7 @@ class LinearError extends Data.TaggedError("LinearError")<{}> {}
 const teamIdSchema = z.uuid();
 
 const bodySchema = z.object({
-  title: z.string().min(10).max(1000),
+  title: z.string().min(3).max(1000),
 });
 
 const validateTeamId = (teamId: string) =>
