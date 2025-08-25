@@ -1,20 +1,19 @@
-# Quadratic V2 (New Name Soon)
+# Quadratic V2
+
+Easily capture user feedback in your app and track it in Linear. Created by [The Holistic Company](https://www.holistic.company).
 
 ## Getting Started
 
 ```bash
 npm install quadratic-v2
-
 yarn add quadratic-v2
-
 pnpm add quadratic-v2
-
 bun add quadratic-v2
 ```
 
-### Create a /api/feedback route
+### Handler Setup
 
-This will depend on your framework of choice. Here's a Next.js example:
+#### NextJS
 
 ```ts
 // app/api/feedback/route.ts
@@ -27,7 +26,9 @@ export const POST = createHandler({
 });
 ```
 
-### Add the feedback widget to your app
+### Feedback Component
+
+#### React
 
 ```tsx
 // app/page.tsx
