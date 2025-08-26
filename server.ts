@@ -56,11 +56,13 @@ export const createHandler = (opts: Options) => async (req: Request) =>
         createIssue(client, opts.teamId, body.title)
       ),
       Effect.andThen(() => Effect.succeed(new Response("Ok!"))),
-      Effect.catchTag("InvalidSchemaError", (e) =>
-        Effect.succeed(new Response(e.problem, { status: 400 }))
-      ),
-      Effect.catchTag("LinearError", (e) =>
-        Effect.succeed(new Response("Internal server error", { status: 500 }))
-      )
+      Effect.catchTags({
+        InvalidSchemaError: (e) =>
+          Effect.succeed(new Response(e.problem, { status: 400 })),
+        LinearError: (e) =>
+          Effect.succeed(
+            new Response("Internal server error", { status: 500 })
+          ),
+      })
     )
   );
