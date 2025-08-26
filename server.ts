@@ -48,12 +48,13 @@ export type Options = {
 
 export const createHandler = (opts: Options) => async (req: Request) =>
   Effect.runPromise(
-    validateTeamId(opts.teamId).pipe(
-      Effect.andThen(
-        Effect.zip(createClient(opts.apiKey), validateBody(await req.json()))
-      ),
-      Effect.andThen(([client, body]) =>
-        createIssue(client, opts.teamId, body.title)
+    Effect.all([
+      createClient(opts.apiKey),
+      validateTeamId(opts.teamId),
+      validateBody(await req.json()),
+    ]).pipe(
+      Effect.andThen(([client, teamId, body]) =>
+        createIssue(client, teamId, body.title)
       ),
       Effect.andThen(() => Effect.succeed(new Response("Ok!"))),
       Effect.catchTags({
