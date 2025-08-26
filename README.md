@@ -28,6 +28,21 @@ export const POST = createHandler({
 });
 ```
 
+#### Astro
+
+```ts
+// pages/api/feedback.ts
+
+import type { APIRoute } from "astro";
+import { createHandler } from "quadratic-v2/server";
+
+export const POST: APIRoute = ({ request }) =>
+  createHandler({
+    apiKey: import.meta.env.LINEAR_API_KEY,
+    teamId: import.meta.env.LINEAR_TEAM_ID,
+  })(request);
+```
+
 ### Feedback Component
 
 #### React
