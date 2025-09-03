@@ -1,6 +1,6 @@
 # Quadratic V2
 
-> Looking for a more complete pre and post-launch solution? Check out [Hype](https://www.buildhype.app).
+> Looking for a more complete pre and post-launch solution? Check out [Hype](https://www.buildhype.dev).
 
 Easily capture user feedback in your app and track it in Linear. Created by [The Holistic Company](https://www.holistic.company).
 
